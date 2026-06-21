@@ -7,7 +7,7 @@ HEMS-Path is a single-file static web app prototype for AW109 helicopter mission
 ## Current Version
 
 - App: `v4.0`
-- Repository package: `v0.1.3-api-status-polish`
+- Repository package: `v0.1.2-aw109-airframe-specificity`
 - Airframe support: AW109 only in the current `v4.0` app; no other airframe profiles are active.
 - Architecture: static HTML/CSS/JavaScript
 - Backend: none
@@ -114,6 +114,6 @@ See `docs/CODEX_PROMPTS.md` for ready-to-use prompts.
 
 ## Suggested Next Patch
 
-`v0.1.4-print-export-briefing-strip`
+`v0.1.3-api-status-polish`
 
 Goal: improve the print/export briefing workflow without changing the mission scoring logic.
