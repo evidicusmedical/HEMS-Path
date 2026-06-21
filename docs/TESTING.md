@@ -7,17 +7,19 @@ Before deploying or merging a PR:
 1. Open `index.html` locally in Chrome or Edge.
 2. Confirm the dashboard renders.
 3. Confirm the prototype disclaimer is visible.
-4. Confirm the map renders.
-5. Click the origin box and select a map point.
-6. Click the destination box and select a second map point.
-7. Click **Run Risk Check**.
-8. Confirm one of these occurs:
+4. Confirm `AW109` or `Current Airframe: AW109` is visible before running analysis.
+5. Confirm the telemetry panel is labeled as AW109-specific performance telemetry.
+6. Confirm the map renders.
+7. Click the origin box and select a map point.
+8. Click the destination box and select a second map point.
+9. Click **Run Risk Check**.
+10. Confirm one of these occurs:
    - Green/Yellow/Red decision displays, or
    - clean COMM_FAILURE message displays without a crash.
-9. Open browser developer console and check for errors.
-10. Click **Copy Standard Briefing Log** after a successful run.
-11. Confirm inline copy status appears and no blocking alert appears.
-12. Click each tab and confirm coordinates/markers are not wiped.
+11. Open browser developer console and check for unexpected errors.
+12. Click **Copy Standard Briefing Log** after a successful run.
+13. Confirm inline copy status appears and no blocking alert appears.
+14. Click each tab and confirm coordinates/markers are not wiped.
 
 ## Vercel Smoke Test
 
@@ -31,6 +33,9 @@ After deployment:
 
 ## Manual Regression Checklist for AI Patches
 
+- [ ] AW109-specific labeling visible before analysis
+- [ ] AW109-specific performance telemetry label visible
+- [ ] Future-airframes note visible without a functional selector
 - [ ] Mission risk thresholds unchanged unless intended
 - [ ] No backend added
 - [ ] No auth added

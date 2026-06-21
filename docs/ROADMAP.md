@@ -4,7 +4,7 @@
 
 - v0.1.0 — Initial single-file app
 - v0.1.1 — Static deployment safety package
-- v0.1.2 — Data-source timestamps and improved API status
+- v0.1.2 — Clarify AW109-only airframe specificity
 - v0.1.3 — Mobile layout polish
 - v0.1.4 — Print/export briefing strip
 
@@ -17,9 +17,9 @@
 
 ## v0.3.x — Aircraft and Operations Profiles
 
-- v0.3.0 — Add airframe selector
-- v0.3.1 — Add EC135 prototype profile
-- v0.3.2 — Add Bell 407 prototype profile with single-engine terminology
+- v0.3.0 — Add non-scoring airframe selector shell
+- v0.3.1 — Add EC135 prototype profile after profile assumptions review
+- v0.3.2 — Add Bell 407 prototype profile with single-engine terminology after profile assumptions review
 - v0.3.3 — Add profile-specific safety disclaimers
 
 ## v0.4.x — Risk Engine Refinement

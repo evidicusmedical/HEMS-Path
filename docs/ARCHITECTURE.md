@@ -2,7 +2,7 @@
 
 ## Design Goal
 
-HEMS-Path is intentionally built as a static, single-file web app. The first version avoids React, Vite, Next.js, package managers, databases, authentication, and server-side functions.
+HEMS-Path is intentionally built as a static, single-file web app. The current v4.0 implementation is AW109-specific and does not include a functional airframe selector. The first version avoids React, Vite, Next.js, package managers, databases, authentication, and server-side functions.
 
 This makes the project easy to host on Vercel, easy to inspect in GitHub, and easy for Codex or another AI coding agent to modify in small patches.
 
@@ -46,6 +46,21 @@ Do not wipe `coords` during tab switching, map redraws, or UI-only changes.
 - `copyDispatchLog()` — copies the current analysis to clipboard.
 - `downloadStandaloneApp()` — downloads the current HTML document.
 
+
+## Future Airframe Profile Plan
+
+The current code should continue to behave as a single AW109 prototype until a later airframe-selector patch. A future implementation may introduce a documented `AIRFRAME_PROFILES` concept that keeps profile-specific labels, terminology, performance assumptions, and safety notes together. That future object should remain data-only at first and should not change scoring behavior until profile-specific thresholds are reviewed and intentionally migrated.
+
+Conceptual future fields could include:
+
+- profile identifier and display name
+- performance telemetry labels
+- RFM/SOP reference text
+- profile-specific limitation notes
+- reviewed threshold constants, only when approved for that airframe
+
+Do not implement live profile switching in v0.1.x. The selector remains planned for the v0.3.x roadmap.
+
 ## Files That Should Usually Change
 
 For small UI/data-source patches:
@@ -79,7 +94,7 @@ Potential future improvements should be phased:
 
 1. Better status/error handling.
 2. Better aviation weather source integration.
-3. Airframe selector.
+3. Airframe selector in a later v0.3.x patch after profile assumptions are documented and reviewed.
 4. Local saved mission templates.
 5. Optional PWA manifest and service worker.
 6. Only later: backend, auth, database, or protected API routes.
