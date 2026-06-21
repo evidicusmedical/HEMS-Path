@@ -7,7 +7,8 @@ HEMS-Path is a single-file static web app prototype for AW109 helicopter mission
 ## Current Version
 
 - App: `v4.0`
-- Repository package: `v0.1.1-static-deployment-safety`
+- Repository package: `v0.1.3-api-status-polish`
+- Airframe support: AW109 only in the current `v4.0` app; no other airframe profiles are active.
 - Architecture: static HTML/CSS/JavaScript
 - Backend: none
 - Build system: none
@@ -86,7 +87,7 @@ Use one small branch per patch. Do not let an AI coding agent rewrite the full a
 Recommended branch naming:
 
 ```text
-v0.1.2-api-status-polish
+v0.1.2-aw109-airframe-specificity
 v0.2.0-metar-source-research
 v0.3.0-airframe-selector
 ```
@@ -103,6 +104,8 @@ See `docs/CODEX_PROMPTS.md` for ready-to-use prompts.
 
 ## Known Limitations
 
+- Current `v4.0` app labeling and prototype performance telemetry are AW109-specific only; future airframes require later profile work and are not selectable in this build.
+
 - Ceiling is estimated from cloud cover rather than decoded METAR ceiling.
 - Visibility is not currently sourced from an aviation weather endpoint.
 - Open-Meteo is not an official aviation briefing source.
@@ -111,6 +114,6 @@ See `docs/CODEX_PROMPTS.md` for ready-to-use prompts.
 
 ## Suggested Next Patch
 
-`v0.1.2-api-status-polish`
+`v0.1.4-print-export-briefing-strip`
 
-Goal: improve user feedback for API failures, add telemetry timestamps, and make the data source status more explicit without changing the mission scoring logic.
+Goal: improve the print/export briefing workflow without changing the mission scoring logic.

@@ -58,7 +58,7 @@
                     <h1 class="text-xl font-black tracking-tight flex items-center">
                         HEMS-Path <span class="ml-2 text-[10px] bg-slate-800 px-2 py-0.5 rounded-full text-slate-400 border border-slate-700 font-mono uppercase">System v4.0</span>
                     </h1>
-                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">Operational Risk Management (ORM) Engine</p>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-[0.2em]">AW109 Operational Risk Management (ORM) Engine</p>
                 </div>
             </div>
             <div class="hidden lg:flex items-center space-x-8 text-[11px] font-mono font-bold">
@@ -66,6 +66,7 @@
                     <div class="w-2 h-2 rounded-full bg-green-500 live-indicator"></div>
                     <span class="text-slate-400 uppercase">Aviation API: <span class="text-white">Active</span></span>
                 </div>
+                <span class="text-slate-400 uppercase">Airframe: <span class="text-white">AW109</span></span>
                 <span class="text-slate-400 uppercase">Ref: <span class="text-white">FAA 135.609 / RFM Sec 1</span></span>
             </div>
         </div>
@@ -85,13 +86,14 @@
             <section class="glass-panel rounded-3xl p-8 space-y-6">
                 <div class="flex items-center justify-between">
                     <h2 class="text-[11px] font-black uppercase tracking-[0.2em] text-slate-500 flex items-center">
-                        <i class="fas fa-route mr-3 text-blue-500"></i> Corridor Configuration
+                        <i class="fas fa-route mr-3 text-blue-500"></i> AW109 Mission Configuration
                     </h2>
                     <div class="flex items-center space-x-4">
                         <div id="sync-status" class="hidden flex items-center space-x-2">
                             <div class="w-1.5 h-1.5 rounded-full bg-blue-500 live-indicator"></div>
                             <span class="text-[9px] font-black text-blue-500 uppercase tracking-tighter">Telemetry Active</span>
                         </div>
+                        <span class="text-[10px] font-mono text-blue-300 uppercase font-black bg-blue-950/40 border border-blue-800/60 rounded-full px-3 py-1">Current Airframe: AW109</span>
                         <span id="coord-display" class="text-[10px] font-mono text-slate-600 uppercase font-bold">GPS: Ready</span>
                     </div>
                 </div>
@@ -146,6 +148,11 @@
                             Run Risk Check
                         </button>
                     </div>
+                </div>
+
+                <div class="rounded-2xl border border-blue-900/40 bg-blue-950/20 p-4 text-[11px] text-blue-200 leading-relaxed font-bold">
+                    <i class="fas fa-helicopter mr-2 text-blue-400"></i>
+                    Current build uses AW109-specific prototype labels and thresholds. Additional airframes are planned for future releases but are not active in this build.
                 </div>
 
                 <div id="weather-map" class="border border-slate-800 shadow-2xl relative"></div>
@@ -224,29 +231,53 @@
             </div>
 
             <section class="glass-panel rounded-3xl p-8 space-y-6">
-                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 flex justify-between items-center">A-109 Performance Telemetry <i class="fas fa-microchip text-blue-500"></i></h3>
+                <h3 class="text-[10px] font-black uppercase tracking-[0.2em] text-slate-500 flex justify-between items-center">AW109-Specific Performance Telemetry <i class="fas fa-microchip text-blue-500"></i></h3>
+                <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-4 font-mono text-[10px] text-slate-400 space-y-3">
+                    <div class="flex items-center justify-between gap-3">
+                        <span class="uppercase font-black tracking-widest">Open-Meteo Poll Time</span>
+                        <span id="poll-time" class="text-slate-200 font-black">POLL_PENDING</span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                        <div class="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                            <p class="uppercase tracking-widest font-black text-slate-500 mb-1">Base Source</p>
+                            <p id="source-base" class="font-black text-slate-300">STANDBY</p>
+                        </div>
+                        <div class="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                            <p class="uppercase tracking-widest font-black text-slate-500 mb-1">Midpoint Source</p>
+                            <p id="source-midpoint" class="font-black text-slate-300">STANDBY</p>
+                        </div>
+                        <div class="rounded-xl border border-slate-800 bg-slate-950/40 p-3">
+                            <p class="uppercase tracking-widest font-black text-slate-500 mb-1">Scene Source</p>
+                            <p id="source-scene" class="font-black text-slate-300">STANDBY</p>
+                        </div>
+                    </div>
+                </div>
                 <div class="grid grid-cols-2 gap-4 font-mono">
                     <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 relative group cursor-help">
-                        <p class="text-[9px] text-slate-500 uppercase font-black mb-1 tracking-widest">Air Density (DA)</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-black mb-1 tracking-widest">AW109 Air Density (DA)</p>
                         <span class="tooltip absolute top-4 right-4"><i class="fas fa-info-circle text-slate-700 text-[10px]"></i><span class="tooltiptext">Density Altitude. The altitude the aircraft "feels" based on heat/pressure. High (+) is thinner air and harder to fly. Low/Negative (-) is dense air and easier to fly.</span></span>
                         <p id="perf-da" class="text-2xl text-white font-bold tracking-tighter">--- FT</p>
                     </div>
                     <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 relative group cursor-help">
-                        <p class="text-[9px] text-slate-500 uppercase font-black mb-1 tracking-widest">Power Reserve</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-black mb-1 tracking-widest">AW109 Power Reserve</p>
                         <span class="tooltip absolute top-4 right-4"><i class="fas fa-info-circle text-slate-700 text-[10px]"></i><span class="tooltiptext">Cat A Margin. Power reserve available for single-engine safety. &lt; 5% is critical in this prototype scoring model.</span></span>
                         <p id="perf-cat" class="text-2xl text-white font-bold tracking-tighter">--- %</p>
                     </div>
                     <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 relative">
-                        <p class="text-[9px] text-slate-500 mb-1 uppercase font-black tracking-widest">Departure OAT</p>
+                        <p class="text-[9px] text-slate-500 mb-1 uppercase font-black tracking-widest">AW109 Departure OAT</p>
                         <p id="perf-temp" class="text-2xl text-white font-bold tracking-tighter">---</p>
                     </div>
                     <div class="bg-slate-900/60 p-5 rounded-2xl border border-slate-800 relative cursor-help">
-                        <p class="text-[9px] text-slate-500 uppercase font-black mb-1 tracking-widest">Peak Corridor Gusts</p>
+                        <p class="text-[9px] text-slate-500 uppercase font-black mb-1 tracking-widest">AW109 Peak Corridor Gusts</p>
                         <span class="tooltip absolute top-4 right-4"><i class="fas fa-info-circle text-slate-700 text-[10px]"></i><span class="tooltiptext">Prototype airframe stability threshold: 31kt peak gust. Confirm against local aircraft manual/SOP before operational use.</span></span>
                         <p id="perf-wind" class="text-2xl text-white font-bold tracking-tighter">--- KT</p>
                     </div>
                 </div>
             </section>
+
+            <div class="rounded-2xl border border-slate-800 bg-slate-900/50 p-4 text-[10px] text-slate-400 leading-relaxed font-bold uppercase tracking-wider">
+                <i class="fas fa-circle-info mr-2 text-blue-400"></i> Additional airframe profiles and a selector are planned for a later release; AW109 is the only active airframe in this build.
+            </div>
 
             <div class="space-y-4">
                 <button onclick="downloadStandaloneApp()" class="w-full bg-blue-950/30 hover:bg-blue-900/50 border border-blue-700/60 p-5 rounded-2xl flex items-center justify-between group transition-all">
@@ -344,6 +375,25 @@
         function cToF(c) { return Math.round((c * 9/5) + 32); }
         function msToKt(ms) { return Math.round(ms * 1.94384); }
 
+        function setSourceStatus(node, status, detail = '') {
+            const el = document.getElementById(`source-${node}`);
+            if (!el) return;
+            const statusColors = {
+                standby: 'text-slate-300',
+                polling: 'text-blue-300',
+                ok: 'text-emerald-300',
+                fail: 'text-rose-300'
+            };
+            el.classList.remove('text-slate-300', 'text-blue-300', 'text-emerald-300', 'text-rose-300');
+            el.classList.add(statusColors[status] || statusColors.standby);
+            el.innerText = detail || status.toUpperCase();
+        }
+
+        function updatePollTime(date = new Date()) {
+            const el = document.getElementById('poll-time');
+            if (el) el.innerText = date.toLocaleString();
+        }
+
         async function fetchWeatherData(lat, lon) {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_gusts_10m,cloud_cover,relative_humidity_2m,weather_code,precipitation&wind_speed_unit=ms&timezone=auto`;
             try {
@@ -355,11 +405,22 @@
                 if (!data || !data.current || typeof data.current.temperature_2m !== 'number') {
                     throw new Error('Open-Meteo response missing current weather payload.');
                 }
-                return data;
+                return { data, error: null };
             } catch (error) {
                 console.error('Weather fetch failed:', error);
-                return null;
+                return { data: null, error: error.message || 'Unknown weather fetch error' };
             }
+        }
+
+        async function pollWeatherNode(node, lat, lon) {
+            setSourceStatus(node, 'polling', 'POLLING');
+            const result = await fetchWeatherData(lat, lon);
+            if (result.data) {
+                setSourceStatus(node, 'ok', 'OPEN-METEO OK');
+            } else {
+                setSourceStatus(node, 'fail', `FAILED: ${result.error}`);
+            }
+            return result;
         }
 
         async function runAnalysis() {
@@ -369,22 +430,37 @@
             }
             const btn = document.getElementById('analyze-btn');
             if (btn) btn.disabled = true;
-            updateStatus('neutral', 'Polling Telemetry...', 'Executing triple-point risk simulation (Base >> Mid >> Scene)...');
+            updatePollTime();
+            setSourceStatus('base', 'standby', 'QUEUED');
+            setSourceStatus('midpoint', 'standby', 'QUEUED');
+            setSourceStatus('scene', 'standby', 'QUEUED');
+            updateStatus('neutral', 'Polling Telemetry...', 'Executing triple-point risk simulation (Base >> Midpoint >> Scene)...');
             
             const midLat = (coords.origin[0] + coords.destination[0]) / 2;
             const midLon = (coords.origin[1] + coords.destination[1]) / 2;
 
-            const [startData, midData, endData] = await Promise.all([
-                fetchWeatherData(coords.origin[0], coords.origin[1]),
-                fetchWeatherData(midLat, midLon),
-                fetchWeatherData(coords.destination[0], coords.destination[1])
+            const [startResult, midResult, endResult] = await Promise.all([
+                pollWeatherNode('base', coords.origin[0], coords.origin[1]),
+                pollWeatherNode('midpoint', midLat, midLon),
+                pollWeatherNode('scene', coords.destination[0], coords.destination[1])
             ]);
 
-            if (!startData || !midData || !endData) {
-                updateStatus('red', 'COMM_FAILURE', 'Weather nodes unreachable or returned incomplete data. Re-verify network and approved weather sources.');
+            const failedNodes = [
+                { label: 'Base', result: startResult },
+                { label: 'Midpoint', result: midResult },
+                { label: 'Scene', result: endResult }
+            ].filter(node => !node.result.data);
+
+            if (failedNodes.length > 0) {
+                const failureDetail = failedNodes.map(node => `${node.label}: ${node.result.error}`).join(' | ');
+                updateStatus('red', 'COMM_FAILURE', `Open-Meteo telemetry failed for ${failureDetail}. Re-verify network and approved weather sources.`);
                 if (btn) btn.disabled = false;
                 return;
             }
+
+            const startData = startResult.data;
+            const midData = midResult.data;
+            const endData = endResult.data;
 
             const syncStatus = document.getElementById('sync-status');
             const startTemp = document.getElementById('start-temp');
