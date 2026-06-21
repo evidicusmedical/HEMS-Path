@@ -116,4 +116,4 @@ See `docs/CODEX_PROMPTS.md` for ready-to-use prompts.
 
 `v0.1.3-api-status-polish`
 
-Goal: improve user feedback for API failures, add telemetry timestamps, and make the data source status more explicit without changing the mission scoring logic.
+Goal: improve the print/export briefing workflow without changing the mission scoring logic.

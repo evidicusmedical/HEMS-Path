@@ -355,6 +355,25 @@
         function cToF(c) { return Math.round((c * 9/5) + 32); }
         function msToKt(ms) { return Math.round(ms * 1.94384); }
 
+        function setSourceStatus(node, status, detail = '') {
+            const el = document.getElementById(`source-${node}`);
+            if (!el) return;
+            const statusColors = {
+                standby: 'text-slate-300',
+                polling: 'text-blue-300',
+                ok: 'text-emerald-300',
+                fail: 'text-rose-300'
+            };
+            el.classList.remove('text-slate-300', 'text-blue-300', 'text-emerald-300', 'text-rose-300');
+            el.classList.add(statusColors[status] || statusColors.standby);
+            el.innerText = detail || status.toUpperCase();
+        }
+
+        function updatePollTime(date = new Date()) {
+            const el = document.getElementById('poll-time');
+            if (el) el.innerText = date.toLocaleString();
+        }
+
         async function fetchWeatherData(lat, lon) {
             const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_gusts_10m,cloud_cover,relative_humidity_2m,weather_code,precipitation&wind_speed_unit=ms&timezone=auto`;
             try {
@@ -366,11 +385,22 @@
                 if (!data || !data.current || typeof data.current.temperature_2m !== 'number') {
                     throw new Error('Open-Meteo response missing current weather payload.');
                 }
-                return data;
+                return { data, error: null };
             } catch (error) {
                 console.error('Weather fetch failed:', error);
-                return null;
+                return { data: null, error: error.message || 'Unknown weather fetch error' };
             }
+        }
+
+        async function pollWeatherNode(node, lat, lon) {
+            setSourceStatus(node, 'polling', 'POLLING');
+            const result = await fetchWeatherData(lat, lon);
+            if (result.data) {
+                setSourceStatus(node, 'ok', 'OPEN-METEO OK');
+            } else {
+                setSourceStatus(node, 'fail', `FAILED: ${result.error}`);
+            }
+            return result;
         }
 
         async function runAnalysis() {
@@ -380,22 +410,37 @@
             }
             const btn = document.getElementById('analyze-btn');
             if (btn) btn.disabled = true;
-            updateStatus('neutral', 'Polling Telemetry...', 'Executing triple-point risk simulation (Base >> Mid >> Scene)...');
+            updatePollTime();
+            setSourceStatus('base', 'standby', 'QUEUED');
+            setSourceStatus('midpoint', 'standby', 'QUEUED');
+            setSourceStatus('scene', 'standby', 'QUEUED');
+            updateStatus('neutral', 'Polling Telemetry...', 'Executing triple-point risk simulation (Base >> Midpoint >> Scene)...');
             
             const midLat = (coords.origin[0] + coords.destination[0]) / 2;
             const midLon = (coords.origin[1] + coords.destination[1]) / 2;
 
-            const [startData, midData, endData] = await Promise.all([
-                fetchWeatherData(coords.origin[0], coords.origin[1]),
-                fetchWeatherData(midLat, midLon),
-                fetchWeatherData(coords.destination[0], coords.destination[1])
+            const [startResult, midResult, endResult] = await Promise.all([
+                pollWeatherNode('base', coords.origin[0], coords.origin[1]),
+                pollWeatherNode('midpoint', midLat, midLon),
+                pollWeatherNode('scene', coords.destination[0], coords.destination[1])
             ]);
 
-            if (!startData || !midData || !endData) {
-                updateStatus('red', 'COMM_FAILURE', 'Weather nodes unreachable or returned incomplete data. Re-verify network and approved weather sources.');
+            const failedNodes = [
+                { label: 'Base', result: startResult },
+                { label: 'Midpoint', result: midResult },
+                { label: 'Scene', result: endResult }
+            ].filter(node => !node.result.data);
+
+            if (failedNodes.length > 0) {
+                const failureDetail = failedNodes.map(node => `${node.label}: ${node.result.error}`).join(' | ');
+                updateStatus('red', 'COMM_FAILURE', `Open-Meteo telemetry failed for ${failureDetail}. Re-verify network and approved weather sources.`);
                 if (btn) btn.disabled = false;
                 return;
             }
+
+            const startData = startResult.data;
+            const midData = midResult.data;
+            const endData = endResult.data;
 
             const syncStatus = document.getElementById('sync-status');
             const startTemp = document.getElementById('start-temp');
