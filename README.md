@@ -114,6 +114,8 @@ See `docs/CODEX_PROMPTS.md` for ready-to-use prompts.
 
 ## Suggested Next Patch
 
-`v0.1.3-api-status-polish`
+Current baseline: `v0.1.3-api-status-polish` is complete and covers API/source-status polish.
+
+Next suggested patch: `v0.1.4-print-export-briefing`
 
 Goal: improve the print/export briefing workflow without changing the mission scoring logic.
